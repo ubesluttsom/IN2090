@@ -7,22 +7,27 @@ CREATE TABLE Tog (
   startStasjon text NOT NULL,
   endeStasjon text NOT NULL,
   ankomstTid timestamp NOT NULL,
-  CHECK (endeStasjon != startStasjon)
 );
 
 CREATE TABLE TogTabell (
   togNr int REFERENCES Tog(togNr),
-  adgangsTid timestamp NOT NULL,
-  stasjon text NOT NULL UNIQUE,
+  adgangsTid timestamp
+  stasjon text NOT NULL,
   PRIMARY KEY (togNr, adgangsTid)
 );
 
 CREATE TABLE Plass (
-  dato timestamp,
+  dato date
   togNr int REFERENCES Tog(togNr),
-  vognNr int NOT NULL,
-  plassNr int NOT NULL,
-  vindu boolean,
-  ledig boolean,
+  vognNr int
+  plassNr int
+  vindu boolean NOT NULL,
+  ledig boolean NOT NULL,
   PRIMARY KEY (dato, togNr, vognNr, plassNr)
 );
+
+-- Eneste skranker jeg putter er å ikke tillate nullverdier.
+-- Datatypene bør være ganske selvforklarende: heltall på alt som
+-- har et «nummer», `timestamp` på alle «tider» (klokkeslett og
+-- dato), `date` det ene stedet oppgaven spør om bare dato, og
+-- boolske verdier på vindusplass og ledighet.
