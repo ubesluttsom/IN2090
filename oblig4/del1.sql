@@ -49,3 +49,31 @@ SELECT maintitle, rank
           FROM series
                INNER JOIN filmrating ON (seriesid = filmid)
          WHERE votes > 1000);
+
+
+-- Oppgave 6
+
+SELECT DISTINCT title, count(language)
+  FROM filmcharacter
+       JOIN filmparticipation USING (partid)
+       JOIN film USING (filmid)
+       LEFT OUTER JOIN filmlanguage USING (filmid)
+ WHERE filmcharacter LIKE 'Mr. Bean'
+ GROUP BY title, language;
+
+
+-- Oppgave 7
+
+-- Idk. Har prøvd circa 9001 forskjellige forespørsler her. Blir ikke riktig.
+-- Med 192 rader (og øverste skuespillere riktig, virker det som), ble dette
+-- nærmest:
+
+SELECT lastname, firstname, COUNT(DISTINCT filmcharacter)
+  FROM filmcharacter
+       JOIN filmparticipation USING (partid)
+       JOIN filmitem USING (filmid)
+       JOIN person USING (personid)
+ GROUP BY lastname, firstname, filmtype
+HAVING COUNT(DISTINCT filmcharacter) > 199 AND
+       filmtype = 'C'
+ ORDER BY COUNT(DISTINCT filmcharacter) DESC;
