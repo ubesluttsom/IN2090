@@ -1,4 +1,4 @@
-
+-- Make schema and add example data
 
 DROP SCHEMA IF EXISTS ws CASCADE;
 
@@ -8,7 +8,7 @@ CREATE SCHEMA ws;
 
 CREATE TABLE ws.users (
     uid SERIAL PRIMARY KEY,
-    username varchar(20) UNIQUE NOT NULL CHECK (username ~ '[^\s]+'),
+    username varchar(20) UNIQUE CHECK (username ~ '[^\s]+'),
     password text NOT NULL, -- NEVER store passwords in plain text in real applications!!!
     name text NOT NULL,
     address text NOT NULL
